@@ -35,10 +35,10 @@ char testKeyAddress_global_within_imp;
 
     NSString *str = [NSString stringWithFormat:
                      @"\n-------------"
-                     @"\n类方法的地址:%p\n"
-                     @"\n%@类\n起始地址:%p"
+                     @"\n类方法的地址:%p"
+                     @"\n类起始地址:%p"
                      @"\n结束地址:%p"
-                     @"\n@implementation之内，方法之外全局变量地址%p\n"
+                     @"\n@implementation之内，方法之外全局变量地址:%p\n"
                      
                      @"\n实例方法内的静态变量地址:%p"
                      @"\n@implementation之外，静态变量地址:%p"
