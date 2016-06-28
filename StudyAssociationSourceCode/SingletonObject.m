@@ -8,11 +8,13 @@
 
 #import "SingletonObject.h"
 
-static char testKeyAddress1;
+static char testKeyAddress_outof_imp;
 
 @implementation SingletonObject
 
 static id instance;
+
+char testKeyAddress4;
 
 + (instancetype)sharedInstance
 {
@@ -23,29 +25,38 @@ static id instance;
     return instance;
 }
 
-static char testKeyAddress2;
+static char testKeyAddress_within_imp;
+//test 全局变量
+char testKeyAddress_global_within_imp;
 
 - (NSString *)description
 {
-    static char testKeyAddress3;
+    static char testKeyAddress_within_method;
 
     NSString *str = [NSString stringWithFormat:
                      @"\n-------------"
+                     @"\n类方法的地址:%p\n"
                      @"\n%@类\n起始地址:%p"
                      @"\n结束地址:%p"
-                     @"\n类方法的地址:%p\n"
-                     @"\n@implementation之外的静态变量地址:%p"
-                     @"\n@implementation之内，方法之外静态变量地址:%p"
-                     @"\n方法内的静态变量地址:%p\n"
+                     @"\n@implementation之内，方法之外全局变量地址%p\n"
+                     
+                     @"\n实例方法内的静态变量地址:%p"
+                     @"\n@implementation之外，静态变量地址:%p"
+                     @"\n@implementation之内，方法之外静态变量地址:%p\n"
+                     
                      @"\n对象的起始地址:%p"
                      @"\n对象的结束地址:%p"
                      @"\n-------------\n",
+                     
+                     [[self class]methodForSelector:@selector(sharedInstance)],
                      NSStringFromClass([self class]),[self class],
                      (long)[self class] + sizeof([self class]),
-                     [[self class]methodForSelector:@selector(sharedInstance)],
-                     &testKeyAddress1,
-                     &testKeyAddress2,
-                     &testKeyAddress3,
+                     &testKeyAddress_global_within_imp,
+                     
+                     &testKeyAddress_within_method,
+                     &testKeyAddress_outof_imp,
+                     &testKeyAddress_within_imp,
+                    
                      self,
                      (long)self + sizeof(self)];
     return str;
